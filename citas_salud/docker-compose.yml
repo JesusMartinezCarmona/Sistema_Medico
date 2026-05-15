@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: citas_salud_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: weroereselmejor2000
+      MYSQL_DATABASE: citas_salud
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
