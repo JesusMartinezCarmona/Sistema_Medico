@@ -160,9 +160,9 @@ INSERT INTO clinica (id_clinica, id_tenant, nombre, direccion, correo, telefono,
 VALUES (1, 1, 'Clínica Ensenada Matriz', 'Av. Ryerson', 'contacto@clinicaens.com', '6461234567', 31.8667, -116.5964);
 
 INSERT INTO usuario (id_tenant, nombre, apellido, correo, password, tipo_usuario) VALUES 
-(1, 'Alejandro', 'Chavez', 'alejandro@mail.com', 'weroereselmejor2000', 'paciente'),
-(1, 'Luis', 'Torres', 'luis.t@mail.com', 'weroereselmejor2000', 'doctor'),
-(1, 'Admin', 'Sistemas', 'admin@mail.com', 'weroereselmejor2000', 'admin');
+(1, 'Alejandro', 'Chavez', 'alejandro@gmail.com', 'weroereselmejor2000', 'paciente'),
+(1, 'Luis', 'Torres', 'luis.@gmail.com', 'weroereselmejor2000', 'doctor'),
+(1, 'Admin', 'Sistemas', 'admin@gmail.com', 'weroereselmejor2000', 'admin');
 
 INSERT INTO paciente (id_usuario, rfc) VALUES (1, 'CURP123456');
 INSERT INTO doctor (id_usuario, id_especialidad, id_clinica, numero_licencia) VALUES (2, 1, 1, 'LIC777');
@@ -173,5 +173,5 @@ INSERT INTO clinica (id_clinica, id_tenant, nombre, direccion)
 VALUES (2, 2, 'Sucursal Tijuana', 'Zona Rio');
 
 INSERT INTO usuario (id_tenant, nombre, apellido, correo, password, tipo_usuario) VALUES 
-(2, 'Alejandro', 'Chavez', 'alejandro@mail.com', 'weroereselmejor2000', 'paciente'),
-(2, 'Ana', 'Gomez', 'ana.g@mail.com', 'weroereselmejor2000', 'doctor')
+(2, 'Alejandro', 'Chavez', 'alejandro@gmail.com', 'weroereselmejor2000', 'paciente'),
+(2, 'Ana', 'Gomez', 'ana.@gmail.com', 'weroereselmejor2000', 'doctor')
