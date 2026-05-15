@@ -25,10 +25,12 @@ CREATE TABLE IF NOT EXISTS clinica (
 
 CREATE TABLE IF NOT EXISTS horarioclinica (
     id_horario INT AUTO_INCREMENT PRIMARY KEY,
+    id_tenant INT NOT NULL, -- Agregado
     id_clinica INT NOT NULL,
     dia_semana ENUM('Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo') NOT NULL,
     hora_apertura TIME NOT NULL,
     hora_cierre TIME NOT NULL,
+    FOREIGN KEY (id_tenant) REFERENCES tenant(id_tenant) ON DELETE CASCADE,
     FOREIGN KEY (id_clinica) REFERENCES clinica(id_clinica) ON DELETE CASCADE
 );
 
@@ -54,19 +56,23 @@ CREATE TABLE IF NOT EXISTS usuario (
 
 CREATE TABLE IF NOT EXISTS paciente (
     id_paciente INT AUTO_INCREMENT PRIMARY KEY,
+    id_tenant INT NOT NULL, -- Agregado
     id_usuario INT NOT NULL UNIQUE,
     rfc VARCHAR(13) NOT NULL,
     penalizado_hasta DATE DEFAULT NULL,
+    FOREIGN KEY (id_tenant) REFERENCES tenant(id_tenant) ON DELETE CASCADE,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS doctor (
     id_doctor INT AUTO_INCREMENT PRIMARY KEY,
+    id_tenant INT NOT NULL, -- Agregado
     id_usuario INT NOT NULL UNIQUE,
     id_especialidad INT NOT NULL,
     id_clinica INT NOT NULL,
     numero_licencia VARCHAR(50) NOT NULL,
     estado_doctor ENUM('activo', 'vacaciones', 'permiso', 'inactivo') DEFAULT 'activo',
+    FOREIGN KEY (id_tenant) REFERENCES tenant(id_tenant) ON DELETE CASCADE,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_especialidad) REFERENCES especialidad(id_especialidad),
     FOREIGN KEY (id_clinica) REFERENCES clinica(id_clinica)
@@ -74,22 +80,26 @@ CREATE TABLE IF NOT EXISTS doctor (
 
 CREATE TABLE IF NOT EXISTS disponibilidad (
     id_disponibilidad INT AUTO_INCREMENT PRIMARY KEY,
+    id_tenant INT NOT NULL, -- Agregado
     id_doctor INT NOT NULL,
     fecha DATE NOT NULL,
     hora_inicio TIME NOT NULL,
     hora_fin TIME NOT NULL,
     estado ENUM('disponible', 'ocupado') DEFAULT 'disponible',
+    FOREIGN KEY (id_tenant) REFERENCES tenant(id_tenant) ON DELETE CASCADE,
     FOREIGN KEY (id_doctor) REFERENCES doctor(id_doctor) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS cita (
     id_cita INT AUTO_INCREMENT PRIMARY KEY,
+    id_tenant INT NOT NULL, -- Agregado
     id_paciente INT NOT NULL,
     id_doctor INT NOT NULL,
     id_disponibilidad INT NOT NULL UNIQUE,
     motivo VARCHAR(255),
     estado ENUM('programada', 'completada', 'cancelada') DEFAULT 'programada',
     fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+    FOREIGN KEY (id_tenant) REFERENCES tenant(id_tenant) ON DELETE CASCADE,
     FOREIGN KEY (id_paciente) REFERENCES paciente(id_paciente) ON DELETE CASCADE,
     FOREIGN KEY (id_doctor) REFERENCES doctor(id_doctor) ON DELETE CASCADE,
     FOREIGN KEY (id_disponibilidad) REFERENCES disponibilidad(id_disponibilidad)
@@ -97,12 +107,14 @@ CREATE TABLE IF NOT EXISTS cita (
 
 CREATE TABLE IF NOT EXISTS pago (
     id_pago INT AUTO_INCREMENT PRIMARY KEY,
+    id_tenant INT NOT NULL, -- Agregado
     id_cita INT NOT NULL,
     monto DECIMAL(10,2) NOT NULL,
     estado_pago ENUM('pendiente', 'pagado', 'fallido') DEFAULT 'pendiente',
     metodo_pago VARCHAR(50),
     transaccion_id VARCHAR(100),
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_tenant) REFERENCES tenant(id_tenant) ON DELETE CASCADE,
     FOREIGN KEY (id_cita) REFERENCES cita(id_cita) ON DELETE CASCADE
 );
 
@@ -154,6 +166,7 @@ VALUES
 ('Grupo Médico Ensenada', 'gme', 'pro'),
 ('Pediatras del Noroeste', 'pediatrasnw', 'basico');
 
+-- DATOS PARA EL TENANT 1
 INSERT INTO especialidad (id_tenant, nombre) VALUES (1, 'Medicina General'), (1, 'Cardiología');
 
 INSERT INTO clinica (id_clinica, id_tenant, nombre, direccion, correo, telefono, latitud, longitud) 
@@ -164,9 +177,11 @@ INSERT INTO usuario (id_tenant, nombre, apellido, correo, password, tipo_usuario
 (1, 'Luis', 'Torres', 'luis.@gmail.com', 'weroereselmejor2000', 'doctor'),
 (1, 'Admin', 'Sistemas', 'admin@gmail.com', 'weroereselmejor2000', 'admin');
 
-INSERT INTO paciente (id_usuario, rfc) VALUES (1, 'CURP123456');
-INSERT INTO doctor (id_usuario, id_especialidad, id_clinica, numero_licencia) VALUES (2, 1, 1, 'LIC777');
+-- Actualizado con id_tenant = 1
+INSERT INTO paciente (id_tenant, id_usuario, rfc) VALUES (1, 1, 'CURP123456');
+INSERT INTO doctor (id_tenant, id_usuario, id_especialidad, id_clinica, numero_licencia) VALUES (1, 2, 1, 1, 'LIC777');
 
+-- DATOS PARA EL TENANT 2
 INSERT INTO especialidad (id_tenant, nombre) VALUES (2, 'Pediatría');
 
 INSERT INTO clinica (id_clinica, id_tenant, nombre, direccion) 
@@ -174,4 +189,8 @@ VALUES (2, 2, 'Sucursal Tijuana', 'Zona Rio');
 
 INSERT INTO usuario (id_tenant, nombre, apellido, correo, password, tipo_usuario) VALUES 
 (2, 'Alejandro', 'Chavez', 'alejandro@gmail.com', 'weroereselmejor2000', 'paciente'),
-(2, 'Ana', 'Gomez', 'ana.@gmail.com', 'weroereselmejor2000', 'doctor')
+(2, 'Ana', 'Gomez', 'ana.@gmail.com', 'weroereselmejor2000', 'doctor');
+
+-- Completando los registros del Tenant 2
+INSERT INTO paciente (id_tenant, id_usuario, rfc) VALUES (2, 4, 'CURP789012');
+INSERT INTO doctor (id_tenant, id_usuario, id_especialidad, id_clinica, numero_licencia) VALUES (2, 5, 3, 2, 'LIC888');
