@@ -1,9 +1,3 @@
-# 🏥 Sistema Médico SaaS Multi-Tenant
-
-Este es el repositorio del frontend desarrollado en **Flutter** para la plataforma de gestión de clínicas médicas. El sistema está diseñado bajo una arquitectura de software multi-tenant (SaaS), permitiendo que múltiples clínicas (tenants) operen de forma aislada en la misma aplicación.
-
----
-
 ## 📂 Estructura del Proyecto (Acomodo de Archivos)
 
 Para mantener el código limpio, escalable y evitar errores de importación, los archivos dentro de la carpeta `lib/` deben seguir estrictamente la siguiente estructura:
