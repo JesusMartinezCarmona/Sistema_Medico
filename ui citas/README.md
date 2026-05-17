@@ -8,7 +8,7 @@ sistema_medico/
 ├── ios/
 ├── web/
 ├── windows/
-├── lib/                             # 🟢 Todo tu código de Flutter va aquí
+├── lib/                             # Todo el código de Flutter va aquí
 │   ├── models/                      # Modelos de datos (Mapeo de la base de datos)
 │   │   └── usuario_model.dart
 │   │
@@ -21,7 +21,7 @@ sistema_medico/
 │   ├── services/                    # Conexiones con la API / Base de datos externa
 │   │   └── auth_service.dart
 │   │
-│   └── main.dart                    # 🚀 Punto de entrada principal de la app
+│   └── main.dart                    # Punto de entrada principal de la app
 │
 ├── analysis_options.yaml            # Configuración de reglas de código
 └── pubspec.yaml                     # Gestión de dependencias y assets
