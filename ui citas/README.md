@@ -1,5 +1,9 @@
 ## Estructura del Proyecto (Acomodo de Archivos)
 
+Para ejecutar el codigo, selecciona el archivo "main.dart", despues en la 
+parte inferior del lado izquierdo selecciona "Run" y correlo con el 
+navegador que gustes
+
 Para mantener el código limpio, y evitar errores de importación, los archivos dentro de la carpeta `lib/` deben seguir estrictamente la siguiente estructura:
 ```text
 sistema_medico/
