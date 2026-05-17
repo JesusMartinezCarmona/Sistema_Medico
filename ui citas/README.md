@@ -1,7 +1,6 @@
-## 📂 Estructura del Proyecto (Acomodo de Archivos)
+## Estructura del Proyecto (Acomodo de Archivos)
 
-Para mantener el código limpio, escalable y evitar errores de importación, los archivos dentro de la carpeta `lib/` deben seguir estrictamente la siguiente estructura:
-Lo siguiente es el orden de carpetas y archivos para que funcionen las IU
+Para mantener el código limpio, y evitar errores de importación, los archivos dentro de la carpeta `lib/` deben seguir estrictamente la siguiente estructura:
 ```text
 sistema_medico/
 ├── android/
